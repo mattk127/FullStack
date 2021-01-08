@@ -1,0 +1,117 @@
+#
+# CSE183 Assignment 9 Backend
+#
+
+openapi: '3.0.3'
+
+info:
+  description: CSE183 Assignment 9 Backend
+  version: 0.1.0
+  title: CSE183 Assignment 9 Backend
+
+servers:
+  - url: http://localhost:3010/v0
+
+paths:
+  /mail:
+    get:
+      description: Returns all EMail
+      parameters:
+        - in: query
+          name: mailbox
+          schema:
+            type: string       
+      responses:
+        200:
+          description: EMail Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mailboxes'
+        404:
+          description: Mailbox not found
+
+components:
+  schemas:
+    Mailboxes:
+      type: array
+      items:
+        type: object
+        properties:
+          name:
+            type: string
+          mail:
+            type: array
+            items:
+              $ref: '#/components/schemas/EmailMailbox'
+    EmailMailbox:
+      type: object
+      properties:
+        to:
+          type: object
+          properties:
+            name:
+              type: string
+            email:
+              type: string
+        from:
+          type: object
+          properties:
+            name:
+              type: string
+            email:
+              type: string
+        sent:
+          type: string
+        subject:
+          type: string
+        content:
+          type: string
+        received:
+          type: string
+        id:
+          type: string
+      required:
+        - to
+        - from
+        - sent
+        - subject
+        - content
+        - received
+        - id
+
+    Email:
+      type: object
+      properties:
+        id:
+          type: string
+        from:
+          type: object
+          properties:
+            name:
+              type: string
+            email:
+              type: string
+        to:
+          type: object
+          properties:
+            name:
+              type: string
+            email:
+              type: string
+        subject:
+          type: string
+        sent:
+          type: string
+        received:
+          type: string
+        content:
+          type: string
+      required:
+        - id
+        - from
+        - to
+        - subject
+        - sent
+        - received
+        - content
